@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Марракеш — полное меню</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            background: #fef7e8;
+            color: #2c1e12;
+            padding: 0 0 3rem;
+        }
+
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        .header {
+            text-align: center;
+            padding: 2rem 1rem 1rem;
+        }
+        .logo {
+            max-width: 180px;
+            height: auto;
+            margin-bottom: 0.75rem;
+            border-radius: 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .header h1 {
+            font-size: 2.8rem;
+            color: #b23c1c;
+            text-shadow: 1px 1px 0 #ffd49f;
+        }
+        .header p {
+            font-size: 1.1rem;
+            color: #5e3a1f;
+        }
+
+        /* ЛИПКАЯ ГОРИЗОНТАЛЬНАЯ НАВИГАЦИЯ */
+        .nav-sticky-container {
+            position: sticky;
+            top: 0;
+            background: #fef7e8;
+            padding: 0.7rem 0;
+            z-index: 1000;
+            border-bottom: 1px solid #f3dabc;
+            box-shadow: 0 4px 10px rgba(44, 30, 18, 0.03);
+        }
+
+        .nav-sections {
+            display: flex;
+            flex-wrap: nowrap;
+            overflow-x: auto;
+            gap: 0.6rem;
+            padding: 0.2rem 1rem 0.5rem;
+            /* Скрываем нативный скроллбар */
+            scrollbar-width: none; /* Firefox */
+            -ms-overflow-style: none;  /* IE/Edge */
+        }
+        
+        .nav-sections::-webkit-scrollbar {
+            display: none; /* Chrome/Safari */
+        }
+
+        .nav-link {
+            background: white;
+            padding: 0.6rem 1.3rem;
+            border-radius: 50px;
+            font-weight: 600;
+            color: #b23c1c;
+            text-decoration: none;
+            transition: 0.2s;
+            border: 1px solid #f3dabc;
+            font-size: 0.9rem;
+            white-space: nowrap;
+            flex-shrink: 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.03);
+        }
+
+        .nav-link:hover, .nav-link.active {
+            background: #d45a2b;
+            color: white;
+            border-color: #b23c1c;
+        }
+
+        /* ОСНОВНОЕ ВЕРТИКАЛЬНОЕ МЕНЮ */
+        .category {
+            margin-top: 1rem;
+            padding-top: 5rem; /* Компенсируем высоту липкого меню при переходе по ссылке */
+            margin-top: -3.5rem; 
+        }
+        
+        .category h2 {
+            font-size: 1.7rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #b94724, #e28743);
+            display: inline-block;
+            padding: 0.4rem 1.6rem;
+            border-radius: 50px;
+            color: white;
+            margin-bottom: 1.5rem;
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 28px;
+            box-shadow: 0 12px 24px -12px rgba(0,0,0,0.15);
+            border: 1px solid #ffddb0;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 30px -12px rgba(0,0,0,0.2);
+        }
+        .card-content {
+            padding: 1.2rem 1.4rem;
+        }
+        .card-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #47200e;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .price {
+            font-weight: 800;
+            font-size: 1.35rem;
+            color: #c2421a;
+            background: #fff0e0;
+            padding: 0 12px;
+            border-radius: 40px;
+            white-space: nowrap;
+        }
+        .desc {
+            font-size: 0.9rem;
+            color: #5e3f28;
+            margin: 0.6rem 0;
+            line-height: 1.4;
+        }
+        .weight {
+            font-size: 0.8rem;
+            color: #8f6a42;
+            background: #f7efdf;
+            display: inline-block;
+            padding: 0.2rem 0.8rem;
+            border-radius: 20px;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 4rem;
+            padding: 2rem 1rem 0;
+            font-size: 0.85rem;
+            color: #b28055;
+            border-top: 1px solid #f3d5b5;
+            line-height: 1.6;
+        }
+        
+        @media (max-width: 650px) {
+            .header h1 { font-size: 2.2rem; }
+            .nav-link { padding: 0.5rem 1.1rem; font-size: 0.85rem; }
+            .category h2 { font-size: 1.35rem; padding: 0.3rem 1.2rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <img src="logo.png" alt="Логотип Марракеш" class="logo">
+    <h1>🔥 МАРРАКЕШ 🔥</h1>
+    <p>Гриль-бар · Мясо и морепродукты на углях</p>
+</div>
+
+<!-- Блок горизонтального проматывания, который застывает намертво вверху экрана -->
+<div class="nav-sticky-container">
+    <div class="nav-sections" id="nav-bar">
+        <a class="nav-link" href="#breakfasts">🍳 Завтраки</a>
+        <a class="nav-link" href="#salads">🥗 Салаты</a>
+        <a class="nav-link" href="#grill">🔥 На углях</a>
+        <a class="nav-link" href="#seafood">🦐 Морепродукты</a>
+        <a class="nav-link" href="#soups">🥣 Супы</a>
+        <a class="nav-link" href="#pasta">🍝 Паста</a>
+        <a class="nav-link" href="#cold">🧀 Холодные закуски</a>
+        <a class="nav-link" href="#bruschetta">🥖 Брускетты</a>
+        <a class="nav-link" href="#hot">🍤 Горячее & Мидии</a>
+        <a class="nav-link" href="#sauces">🥫 Соусы</a>
+        <a class="nav-link" href="#sides">🍟 Гарниры</a>
+        <a class="nav-link" href="#desserts">🍰 Десерты</a>
+    </div>
+</div>
+
+<div class="container">
+    <div id="menu-root"></div>
+
+    <footer>
+        🌶️ Ко всем блюдам на углях подаётся лаваш, лук, томат, зелень (кроме хачапури).<br>
+        Цены указаны в рублях. Актуальность меню: гриль-бар «Марракеш».
+    </footer>
+</div>
+
+<script>
+    const menuByCategory = {
+        breakfasts: {
+            title: "ЗАВТРАКИ (10:00 – 12:00)",
+            id: "breakfasts",
+            items: [
+                { name: "Английский завтрак", desc: "яичница, бекон, колбаски, фасоль, тосты", weight: "340 г", price: "720 ₽" },
+                { name: "Клаб сендвич с картофелем Фри", desc: "", weight: "220 г", price: "720 ₽" },
+                { name: "Скрэмбл с лососем и авокадо", desc: "", weight: "250 г", price: "610 ₽" },
+                { name: "Сырники ванильные", desc: "подаются со сметаной, вареньем или сгущенкой на выбор", weight: "150/50 г", price: "480 ₽" },
+                { name: "Паштет из печени птицы с тостами", desc: "", weight: "180 г", price: "420 ₽" },
+                { name: "Шакшука по-сочински", desc: "", weight: "230/20 г", price: "410 ₽" },
+                { name: "Овсяная каша на молоке с лесными орехами", desc: "", weight: "240 г", price: "340 ₽" },
+                { name: "Омлет или яичница из трех яиц", desc: "", weight: "120 г", price: "320 ₽" }
+            ]
+        },
+        salads: {
+            title: "САЛАТЫ",
+            id: "salads",
+            items: [
+                { name: "Салат с рукколой и креветками", desc: "руккола, помидоры черри, тигровые креветки", weight: "250 г", price: "810 ₽" },
+                { name: "Стейк-салат с говядиной", desc: "говядина, микс салата, овощи на гриле, фирменный соус", weight: "410 г", price: "720 ₽" },
+                { name: "Теплый салат с морепродуктами", desc: "микс морепродуктов, болгарский перец, черри, зернистая горчица", weight: "250 г", price: "920 ₽" },
+                { name: "Салат с авокадо и киноа", desc: "микс салата, огурец, яблоко, бобы эдамаме", weight: "285 г", price: "690 ₽" },
+                { name: "Салат с цыпленком", desc: "куриное филе, микс салата, соус цезарь", weight: "220 г", price: "580 ₽" },
+                { name: "Салат Греческий", desc: "сыр фета, помидоры, огурцы, лук красный, оливки", weight: "240 г", price: "580 ₽" },
+                { name: "Салат Хрустящий Баклажан", desc: "", weight: "250 г", price: "580 ₽" }
+            ]
+        },
+        grill: {
+            title: "БЛЮДА НА УГЛЯХ (ГРИЛЬ)",
+            id: "grill",
+            items: [
+                { name: "Медальоны из говядины", desc: "лаваш, лук, томат, зелень", weight: "250/40 г", price: "2680 ₽" },
+                { name: "Шашлык из бараньей корейки", desc: "лаваш, лук, томат, зелень", weight: "250/40 г", price: "2100 ₽" },
+                { name: "Шашлык из бараньей мякоти", desc: "лаваш, лук, томат, зелень", weight: "250/40 г", price: "1680 ₽" },
+                { name: "Люля-кебаб из баранины", desc: "лаваш, лук, томат, зелень", weight: "200/40 г", price: "1680 ₽" },
+                { name: "Люля-кебаб из курицы", desc: "лаваш, лук, томат, зелень", weight: "200/40 г", price: "1280 ₽" },
+                { name: "Бараньи язычки", desc: "лаваш, лук, томат, зелень", weight: "225/40 г", price: "1240 ₽" },
+                { name: "Шашлык из свинины", desc: "лаваш, лук, томат, зелень", weight: "250/40 г", price: "1120 ₽" },
+                { name: "Свиные ребра барбекю", desc: "лаваш, лук, томат, зелень", weight: "300/40 г", price: "1120 ₽" },
+                { name: "Шашлык из куриного бедра", desc: "лаваш, лук, томат, зелень", weight: "250/40 г", price: "920 ₽" },
+                { name: "Хачапури на гриле", desc: "", weight: "150 г", price: "440 ₽" }
+            ]
+        },
+        seafood: {
+            title: "МОРЕПРОДУКТЫ НА ГРИЛЕ",
+            id: "seafood",
+            items: [
+                { name: "Тигровые креветки", desc: "", weight: "200/40 г", price: "2380 ₽" },
+                { name: "Черноморская камбала", desc: "цена за 100 г", weight: "за 100 г", price: "1400 ₽ (за 100г)" },
+                { name: "Стейк из семги", desc: "цена за 100 г", weight: "за 100 г", price: "810 ₽ (за 100г)" },
+                { name: "Сибас", desc: "цена за 100 г", weight: "за 100 г", price: "680 ₽ (за 100г)" },
+                { name: "Дорадо", desc: "цена за 100 г", weight: "за 100 г", price: "680 ₽ (за 100г)" }
+            ]
+        },
+        soups: {
+            title: "СУПЫ",
+            id: "soups",
+            items: [
+                { name: "Том Ям с морепродуктами", desc: "куриный бульон, креветки, грибы, помидор, кокосовое молоко, чили, рис", weight: "250/85/50 г", price: "810 ₽" },
+                { name: "Крем-суп грибной", desc: "", weight: "250 г", price: "540 ₽" },
+                { name: "Борщ с салом", desc: "", weight: "250/30 г", price: "520 ₽" },
+                { name: "Окрошка мясная", desc: "", weight: "250 г", price: "440 ₽" },
+                { name: "Куриный бульон с лапшой", desc: "", weight: "250 г", price: "420 ₽" },
+                { name: "Окрошка овощная", desc: "", weight: "250 г", price: "390 ₽" }
+            ]
+        },
+        pasta: {
+            title: "ПАСТА",
+            id: "pasta",
+            items: [
+                { name: "Фетучини с креветками и цукини", desc: "", weight: "220 г", price: "620 ₽" },
+                { name: "Фетучини с лососем", desc: "", weight: "220 г", price: "620 ₽" },
+                { name: "Фетучини Карбонара", desc: "", weight: "220 г", price: "580 ₽" },
+                { name: "Фетучини Веган с ореховым соусом", desc: "", weight: "220 г", price: "460 ₽" },
+                { name: "Фетучини Альфредо", desc: "", weight: "220 г", price: "420 ₽" }
+            ]
+        },
+        cold: {
+            title: "ХОЛОДНЫЕ ЗАКУСКИ",
+            id: "cold",
+            items: [
+                { name: "Европейские Сыры", desc: "", weight: "260/30 г", price: "2380 ₽" },
+                { name: "Лосось слабосоленый", desc: "", weight: "150/20/40 г", price: "920 ₽" },
+                { name: "Ассорти кавказских сыров", desc: "", weight: "190 г", price: "620 ₽" },
+                { name: "Капрезе", desc: "", weight: "300 г", price: "490 ₽" },
+                { name: "Овощи свежие", desc: "", weight: "285/30 г", price: "460 ₽" },
+                { name: "Оливки Гиганты", desc: "", weight: "60 г", price: "460 ₽" },
+                { name: "Зелень", desc: "", weight: "60 г", price: "310 ₽" }
+            ]
+        },
+        bruschetta: {
+            title: "БРУСКЕТТЫ",
+            id: "bruschetta",
+            items: [
+                { name: "Брускетта с креветкой", desc: "творожный сыр, тигровые креветки", weight: "130 г", price: "540 ₽" },
+                { name: "Брускетта с лососем", desc: "сыр моцарелла, лосось слабосоленый, салат", weight: "130 г", price: "540 ₽" },
+                { name: "Брускетта с говядиной", desc: "салат, вишня, томаты, огурцы маринованные, соус", weight: "130 г", price: "540 ₽" },
+                { name: "Брускетта Веган", desc: "баклажаны, перец, соус кари, соус песто", weight: "130 г", price: "440 ₽" }
+            ]
+        },
+        hot: {
+            title: "ГОРЯЧИЕ ЗАКУСКИ И МИДИИ",
+            id: "hot",
+            items: [
+                { name: "Тигровые креветки жареные", desc: "", weight: "200/30 г", price: "2280 ₽" },
+                { name: "Мидии запеченные", desc: "", weight: "200/30 г", price: "1110 ₽" },
+                { name: "Черноморские мидии с голубым сыром", desc: "", weight: "350 г", price: "960 ₽" },
+                { name: "Черноморские мидии в соусе Том Ям", desc: "", weight: "350 г", price: "940 ₽" },
+                { name: "Черноморские мидии с томатами и чесноком", desc: "", weight: "350 г", price: "870 ₽" },
+                { name: "Черноморские мидии в винном соусе", desc: "", weight: "350 г", price: "840 ₽" },
+                { name: "Ассорти закусок к пиву", desc: "крылья буффало, луковые кольца, стрипсы, соус", weight: "350/90 г", price: "980 ₽" },
+                { name: "Бородинские гренки с чесноком", desc: "", weight: "120/30 г", price: "420 ₽" }
+            ]
+        },
+        sauces: {
+            title: "СОУСЫ (50 г)",
+            id: "sauces",
+            items: [
+                { name: "Аджика красная", desc: "", weight: "50 г", price: "150 ₽" },
+                { name: "Наршараб", desc: "", weight: "50 г", price: "150 ₽" },
+                { name: "Ткемали", desc: "", weight: "50 г", price: "150 ₽" },
+                { name: "Сметана", desc: "", weight: "50 г", price: "150 ₽" },
+                { name: "Сырный соус", desc: "", weight: "50 г", price: "150 ₽" },
+                { name: "Чесночный соус", desc: "", weight: "50 г", price: "150 ₽" }
+            ]
+        },
+        sides: {
+            title: "ГАРНИРЫ",
+            id: "sides",
+            items: [
+                { name: "Картофель Фри", desc: "", weight: "150 г", price: "320 ₽" },
+                { name: "Батат фри с пармезаном", desc: "", weight: "150/20 г", price: "480 ₽" },
+                { name: "Овощи гриль", desc: "", weight: "230 г", price: "480 ₽" },
+                { name: "Микс дикого и отварного риса", desc: "", weight: "150 г", price: "350 ₽" },
+                { name: "Брокколи в сливочном соусе", desc: "", weight: "150 г", price: "420 ₽" },
+                { name: "Шампиньоны на гриле", desc: "", weight: "230 г", price: "420 ₽" }
+            ]
+        },
+        desserts: {
+            title: "ДЕСЕРТЫ",
+            id: "desserts",
+            items: [
+                { name: "Сорбет Манго/Маракуйя", desc: "", weight: "80 г", price: "420 ₽" },
+                { name: "Сорбет Малина", desc: "", weight: "80 г", price: "420 ₽" },
+                { name: "Мороженое пломбир", weight: "80 г", price: "400 ₽" },
+                { name: "Штрудель с шариком мороженого", desc: "", weight: "120 г", price: "420 ₽" },
+                { name: "Чизкейк", desc: "", weight: "80 г", price: "340 ₽" }
+            ]
+        }
+    };
+
+    function renderMenu() {
+        const root = document.getElementById("menu-root");
+        let html = "";
+        for (const key in menuByCategory) {
+            const cat = menuByCategory[key];
+            html += `<div class="category" id="${cat.id}">`;
+            html += `<h2>${escapeHtml(cat.title)}</h2>`;
+            html += `<div class="menu-grid">`;
+            for (const item of cat.items) {
+                html += `
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="card-title">
+                                <span>${escapeHtml(item.name)}</span>
+                                <span class="price">${item.price}</span>
+                            </div>
+                            ${item.desc ? `<div class="desc">${escapeHtml(item.desc)}</div>` : '<div class="desc">—</div>'}
+                            <div class="weight">${item.weight}</div>
+                        </div>
+                    </div>
+                `;
+            }
+            html += `</div></div>`;
+        }
+        root.innerHTML = html;
+    }
+
+    function escapeHtml(str) {
+        if (!str) return '';
+        return str.replace(/[&<>]/g, function(m) {
+            if (m === '&') return '&amp;';
+            if (m === '<') return '&lt;';
+            if (m === '>') return '&gt;';
+            return m;
+        });
+    }
+
+    // Обработка клика по кнопкам навигации
+    document.getElementById("nav-bar").addEventListener("click", (e) => {
+        const link = e.target.closest(".nav-link");
+        if (link && link.hash) {
+            e.preventDefault();
+            const targetId = link.hash.slice(1);
+            const targetElem = document.getElementById(targetId);
+            
+            if (targetElem) {
+                // Идеально точный расчет скролла с учетом "липкого" верхнего бара
+                const stickyOffset = document.querySelector(".nav-sticky-container").offsetHeight;
+                const elementPosition = targetElem.getBoundingClientRect().top + window.pageYOffset;
+                const offsetPosition = elementPosition - stickyOffset + 50; 
+
+                window.scrollTo({
+                    top: offsetPosition,
+                    behavior: "smooth"
+                });
+
+                // Легкая подсветка категории при переходе
+                targetElem.style.transition = "0.3s";
+                targetElem.style.textShadow = "0 0 10px rgba(240, 165, 90, 0.6)";
+                setTimeout(() => targetElem.style.textShadow = "", 800);
+            }
+        }
+    });
+
+    // Интеллектуальный трекер скролла: подсвечивает нужную кнопку в шапке в зависимости от того, где находится пользователь
+    window.addEventListener('scroll', () => {
+        const categories = document.querySelectorAll('.category');
+        const navLinks = document.querySelectorAll('.nav-link');
+        const stickyOffset = document.querySelector(".nav-sticky-container").offsetHeight + 100;
+        
+        let currentId = "";
+        categories.forEach(cat => {
+            const top = cat.getBoundingClientRect().top;
+            if (top < stickyOffset) {
+                currentId = cat.id;
+            }
+        });
+
+        navLinks.forEach(link => {
+            link.classList.remove('active');
+            if (link.hash.slice(1) === currentId) {
+                link.classList.add('active');
+                // Автоматически доворачиваем горизонтальный скроллбара на активную кнопку
+                link.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+            }
+        });
+    });
+
+    renderMenu();
+</script>
+</body>
+</html>
